@@ -1,12 +1,13 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ subject or 'Comunicação Jurídica' }}</title>
+  <!-- Fonte opcional (fallback seguro para clientes de e-mail) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
-<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2d3748; line-height: 1.6;">
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2d3748; line-height: 1.6;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8fafc; padding: 20px 10px;">
     <tr>
       <td align="center">
@@ -20,8 +21,11 @@
                 <img src="{{ escritorio.logo_url }}" alt="{{ escritorio.nome }}" width="180" style="max-width: 180px; height: auto; display: block; margin: 0 auto;">
               {% else %}
                 <h1 style="margin: 0; font-size: 24px; font-weight: 600; color: white; letter-spacing: -0.5px;">
-                  {{ escritorio.nome }}
+                  Luiz Peixoto - Advocacia e Consultoria
                 </h1>
+                <p style="margin: 10px 0 0; font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 400;">
+                  Escritório Jurídico Profissional
+                </p>
               {% endif %}
             </td>
           </tr>
@@ -33,28 +37,31 @@
             </td>
           </tr>
 
-          <!-- Rodapé (OBRIGATÓRIO) -->
+          <!-- Rodapé (OBRIGATÓRIO pela OAB) -->
           <tr>
             <td style="padding: 25px 30px; background-color: #f8fafc; border-top: 1px solid #edf2f7; font-size: 13px; color: #4a5568;">
               <div style="text-align: center; margin-bottom: 12px;">
                 <p style="margin: 4px 0; font-weight: 600; color: #1a365d;">
-                  {{ advogado.nome }} | OAB/{{ advogado.estado }} {{ advogado.oab }}
+                  Luiz Peixoto de Siqueira Filho | OAB/RJ 94719
                 </p>
-                <p style="margin: 4px 0; color: #4a5568;">
-                  {{ escritorio.endereco }}
+                <p style="margin: 6px 0; color: #4a5568; line-height: 1.4;">
+                  Estrada do Capenha, 155, ap. 502<br>
+                  Pechincha, Jacarepaguá<br>
+                  Rio de Janeiro/RJ
                 </p>
-                <p style="margin: 8px 0;">
-                  <a href="tel:{{ escritorio.telefone }}" style="color: #2c5282; text-decoration: none;">{{ escritorio.telefone }}</a>
+                <p style="margin: 10px 0;">
+                  <a href="tel:+5521969191621" style="color: #2c5282; text-decoration: none;">(21) 96919-1621</a>
                   &nbsp;|&nbsp;
-                  <a href="mailto:{{ escritorio.email }}" style="color: #2c5282; text-decoration: none;">{{ escritorio.email }}</a>
+                  <a href="mailto:luizpeixoto.adv@gmail.com" style="color: #2c5282; text-decoration: none;">luizpeixoto.adv@gmail.com</a>
                 </p>
-                {% if escritorio.site %}
-                  <p style="margin: 8px 0;">
-                    <a href="{{ escritorio.site }}" target="_blank" style="color: #2c5282; text-decoration: underline; font-weight: 500;">
-                      {{ escritorio.site }}
-                    </a>
-                  </p>
-                {% endif %}
+                <!-- Site opcional: descomente se tiver -->
+                <!--
+                <p style="margin: 8px 0;">
+                  <a href="https://luizpeixoto.adv.br" target="_blank" style="color: #2c5282; text-decoration: underline; font-weight: 500;">
+                    luizpeixoto.adv.br
+                  </a>
+                </p>
+                -->
               </div>
 
               {% if destinatario.tipo == "prospect" %}
@@ -77,7 +84,7 @@
                   Este e-mail é confidencial e destinado exclusivamente a seu(s) destinatário(s).
                 </p>
                 <p style="margin: 4px 0;">
-                  © {{ now.year }} {{ escritorio.nome }}. Todos os direitos reservados.
+                  © {{ now.year }} Luiz Peixoto - Advocacia e Consultoria. Todos os direitos reservados.
                 </p>
               </div>
             </td>
