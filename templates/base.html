@@ -1,3 +1,4 @@
+<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,45 +6,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ subject or 'Comunicação Jurídica' }}</title>
 </head>
-<body style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #333; background-color: #f9f9f9; margin: 0; padding: 0;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9f9f9;">
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2d3748; line-height: 1.6;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8fafc; padding: 20px 10px;">
     <tr>
-      <td align="center" style="padding: 20px 10px;">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+      <td align="center">
+        <!-- Container principal -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #edf2f7;">
+          
+          <!-- Cabeçalho -->
           <tr>
-            <td style="padding: 20px; text-align: center; background-color: #ffffff; border-bottom: 1px solid #eee;">
+            <td style="padding: 30px 30px 20px; text-align: center; background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);">
               {% if escritorio.logo_url %}
-                <img src="{{ escritorio.logo_url }}" alt="{{ escritorio.nome }}" width="180" style="max-width: 180px; height: auto;">
+                <img src="{{ escritorio.logo_url }}" alt="{{ escritorio.nome }}" width="180" style="max-width: 180px; height: auto; display: block; margin: 0 auto;">
               {% else %}
-                <h2 style="margin: 0; color: #2c3e50;">{{ escritorio.nome }}</h2>
+                <h1 style="margin: 0; font-size: 24px; font-weight: 600; color: white; letter-spacing: -0.5px;">
+                  {{ escritorio.nome }}
+                </h1>
               {% endif %}
             </td>
           </tr>
+
+          <!-- Conteúdo -->
           <tr>
             <td style="padding: 30px;">
               {% block content %}{% endblock %}
             </td>
           </tr>
+
+          <!-- Rodapé (OBRIGATÓRIO) -->
           <tr>
-            <td style="padding: 20px; font-size: 13px; color: #666; background-color: #fafafa; border-top: 1px solid #eee; text-align: center;">
-              <p style="margin: 0 0 10px;">
-                {{ advogado.nome }} | OAB/{{ advogado.estado }} {{ advogado.oab }}<br>
-                {{ escritorio.endereco }}<br>
-                {{ escritorio.telefone }} | {{ escritorio.email }}<br>
-                {% if escritorio.site %}<a href="{{ escritorio.site }}" style="color: #2980b9;">{{ escritorio.site }}</a>{% endif %}
-              </p>
-              {% if destinatario.tipo == "prospect" %}
-                <p style="margin: 10px 0; font-size: 12px; color: #888;">
-                  Você recebeu este e-mail porque se inscreveu em nosso informativo jurídico.<br>
-                  {% if unsubscribe_url %}
-                    <a href="{{ unsubscribe_url }}" style="color: #888; text-decoration: underline;">Clique aqui para cancelar sua inscrição</a>.
-                  {% endif %}
+            <td style="padding: 25px 30px; background-color: #f8fafc; border-top: 1px solid #edf2f7; font-size: 13px; color: #4a5568;">
+              <div style="text-align: center; margin-bottom: 12px;">
+                <p style="margin: 4px 0; font-weight: 600; color: #1a365d;">
+                  {{ advogado.nome }} | OAB/{{ advogado.estado }} {{ advogado.oab }}
                 </p>
+                <p style="margin: 4px 0; color: #4a5568;">
+                  {{ escritorio.endereco }}
+                </p>
+                <p style="margin: 8px 0;">
+                  <a href="tel:{{ escritorio.telefone }}" style="color: #2c5282; text-decoration: none;">{{ escritorio.telefone }}</a>
+                  &nbsp;|&nbsp;
+                  <a href="mailto:{{ escritorio.email }}" style="color: #2c5282; text-decoration: none;">{{ escritorio.email }}</a>
+                </p>
+                {% if escritorio.site %}
+                  <p style="margin: 8px 0;">
+                    <a href="{{ escritorio.site }}" target="_blank" style="color: #2c5282; text-decoration: underline; font-weight: 500;">
+                      {{ escritorio.site }}
+                    </a>
+                  </p>
+                {% endif %}
+              </div>
+
+              {% if destinatario.tipo == "prospect" %}
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px dashed #cbd5e0; font-size: 12px; color: #718096;">
+                  <p style="margin: 6px 0;">
+                    Você recebeu este e-mail porque se inscreveu em nosso informativo jurídico.
+                  </p>
+                  {% if unsubscribe_url %}
+                    <p style="margin: 6px 0;">
+                      <a href="{{ unsubscribe_url }}" style="color: #1a365d; text-decoration: underline; font-weight: 500;">
+                        Clique aqui para cancelar sua inscrição
+                      </a>
+                    </p>
+                  {% endif %}
+                </div>
               {% endif %}
-              <p style="margin-top: 15px; font-size: 11px; color: #999;">
-                Este e-mail é confidencial.<br>
-                © {{ now.year }} {{ escritorio.nome }}. Todos os direitos reservados.
-              </p>
+
+              <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #edf2f7; font-size: 11px; color: #a0aec0;">
+                <p style="margin: 4px 0;">
+                  Este e-mail é confidencial e destinado exclusivamente a seu(s) destinatário(s).
+                </p>
+                <p style="margin: 4px 0;">
+                  © {{ now.year }} {{ escritorio.nome }}. Todos os direitos reservados.
+                </p>
+              </div>
             </td>
           </tr>
         </table>
