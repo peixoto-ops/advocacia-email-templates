@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Informativo Jurídico – {{ escritorio.nome }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Informativo Jurídico</h1>
+    <p>Receba conteúdos exclusivos sobre direito e atualizações legislativas.</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ 'alert-success' if category == 'success' else 'alert-error' }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form method="POST">
+      <label for="email">Seu e-mail profissional:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="area">Área de interesse:</label>
+      <select id="area" name="area" required>
+        <option value="">Selecione</option>
+        {% for area in areas %}
+          <option value="{{ area }}">{{ area }}</option>
+        {% endfor %}
+      </select>
+      <div class="checkbox-group">
+        <input type="checkbox" id="consent" name="consent" required>
+        <label for="consent">
+          Li e aceito o <a href="#" target="_blank">tratamento dos meus dados pessoais</a> conforme a LGPD,
+          para receber informativos jurídicos do {{ escritorio.nome }}. Poderei cancelar a qualquer momento.
+        </label>
+      </div>
+      <button type="submit">Receber Informativos</button>
+    </form>
+    <footer>
+      <p>{{ advogado.nome }} | OAB/{{ advogado.estado }} {{ advogado.oab }}<br>{{ escritorio.endereco }}</p>
+    </footer>
+  </div>
+</body>
+</html>

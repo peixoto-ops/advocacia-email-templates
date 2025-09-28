@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ subject or 'Comunicação Jurídica' }}</title>
+</head>
+<body style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #333; background-color: #f9f9f9; margin: 0; padding: 0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f9f9f9;">
+    <tr>
+      <td align="center" style="padding: 20px 10px;">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+          <tr>
+            <td style="padding: 20px; text-align: center; background-color: #ffffff; border-bottom: 1px solid #eee;">
+              {% if escritorio.logo_url %}
+                <img src="{{ escritorio.logo_url }}" alt="{{ escritorio.nome }}" width="180" style="max-width: 180px; height: auto;">
+              {% else %}
+                <h2 style="margin: 0; color: #2c3e50;">{{ escritorio.nome }}</h2>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 30px;">
+              {% block content %}{% endblock %}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px; font-size: 13px; color: #666; background-color: #fafafa; border-top: 1px solid #eee; text-align: center;">
+              <p style="margin: 0 0 10px;">
+                {{ advogado.nome }} | OAB/{{ advogado.estado }} {{ advogado.oab }}<br>
+                {{ escritorio.endereco }}<br>
+                {{ escritorio.telefone }} | {{ escritorio.email }}<br>
+                {% if escritorio.site %}<a href="{{ escritorio.site }}" style="color: #2980b9;">{{ escritorio.site }}</a>{% endif %}
+              </p>
+              {% if destinatario.tipo == "prospect" %}
+                <p style="margin: 10px 0; font-size: 12px; color: #888;">
+                  Você recebeu este e-mail porque se inscreveu em nosso informativo jurídico.<br>
+                  {% if unsubscribe_url %}
+                    <a href="{{ unsubscribe_url }}" style="color: #888; text-decoration: underline;">Clique aqui para cancelar sua inscrição</a>.
+                  {% endif %}
+                </p>
+              {% endif %}
+              <p style="margin-top: 15px; font-size: 11px; color: #999;">
+                Este e-mail é confidencial.<br>
+                © {{ now.year }} {{ escritorio.nome }}. Todos os direitos reservados.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
