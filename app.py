@@ -23,18 +23,43 @@ def save_prospects(data):
     with open(PROSPECTS_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
-BASE_CONTEXT = {
-    "advogado": {"nome": "Dra. Juliana Almeida", "oab": "98765", "estado": "RJ"},
-    "escritorio": {
-        "nome": "Almeida & Associados Advogados",
-        "endereco": "Rua do Ouvidor, 50 - Centro, Rio de Janeiro/RJ",
-        "telefone": "(21) 3333-4444",
-        "email": "contato@almeidaadvocacia.com.br",
-        "site": "https://almeidaadvocacia.com.br",
-        "logo_url": None
-    },
-    "now": datetime.now()
-}
+def load_sensitive_config():
+    """Carrega a configuração sensível de um arquivo JSON"""
+    import os
+    # Caminho do arquivo de configuração (pode ser sobrescrito por variável de ambiente)
+    CONFIG_PATH = os.getenv("ADVOCACIA_CONFIG", os.path.join(os.path.dirname(__file__), "config.json"))
+    
+    if not os.path.exists(CONFIG_PATH):
+        if app.debug:
+            print("⚠️ AVISO: config.json não encontrado. Usando dados fictícios (apenas em modo debug).")
+            return {
+                "advogado": {"nome": "Advogado Exemplo", "oab": "00000", "estado": "XX"},
+                "escritorio": {
+                    "nome": "Escritório Exemplo",
+                    "endereco": "Endereço Exemplo",
+                    "telefone": "(00) 0000-0000",
+                    "email": "exemplo@dominio.com",
+                    "site": "https://exemplo.com",
+                    "logo_url": None
+                }
+            }
+        else:
+            raise RuntimeError("Arquivo de configuração sensível ausente em produção: config.json")
+    
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def get_base_context():
+    """Retorna o contexto base para os templates"""
+    config = load_sensitive_config()
+    return {
+        "advogado": config["advogado"],
+        "escritorio": config["escritorio"],
+        "now": datetime.now()
+    }
+
+# Substituímos o BASE_CONTEXT hardcoded por uma função que carrega dados de configuração
+# BASE_CONTEXT = get_base_context()
 
 @app.route('/')
 def index():
@@ -81,7 +106,10 @@ def unsubscribe():
 
 @app.route('/preview/<template_name>')
 def preview(template_name):
-    context = {**BASE_CONTEXT, "cliente": {"nome": "Carlos Souza"}, "processo": {"numero": "0001234-56.2023.8.19.0001", "ultima_atualizacao": "Decisão publicada no DJE."}, "data_atualizacao": datetime.now(), "destinatario": {"tipo": "cliente"}}
+    # Carrega o contexto base dinamicamente
+    base_context = get_base_context()
+    
+    context = {**base_context, "cliente": {"nome": "Carlos Souza"}, "processo": {"numero": "0001234-56.2023.8.19.0001", "ultima_atualizacao": "Decisão publicada no DJE."}, "data_atualizacao": datetime.now(), "destinatario": {"tipo": "cliente"}}
     if template_name == "newsletter":
         context.update({
             "area_interesse": "LGPD",

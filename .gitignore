@@ -1,3 +1,63 @@
-__pycache__/
-*.pyc
+# Configurações sensíveis
+config.json
 .env
+*.env
+
+# Arquivos temporários
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+
+# Ambientes virtuais
+venv/
+env/
+.venv/
+.env/
+
+# Arquivos compilados
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.html
+.hypothesis/
+
+# Distribuições
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+sdist/
+develop-eggs/
+.installed.cfg
+MANIFEST
+
+# Documentação
+docs/_build/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Notebooks Jupyter
+.ipynb_checkpoints
+
+# Arquivos de teste
+test_*.py
+*_test.py
+tests/

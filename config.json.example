@@ -1,0 +1,15 @@
+{
+  "advogado": {
+    "nome": "Seu Nome Completo",
+    "oab": "XXXXX",
+    "estado": "UF"
+  },
+  "escritorio": {
+    "nome": "Nome do Escritório",
+    "endereco": "Endereço completo",
+    "telefone": "(XX) XXXX-XXXX",
+    "email": "contato@escritorio.com.br",
+    "site": "https://escritorio.com.br",
+    "logo_url": null
+  }
+}
